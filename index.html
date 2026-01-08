@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard — Mémo • Météo • Calendrier</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>Project Overview</h1>
+    <div class="top-right">
+      <button id="cardsManager" class="theme-toggle" title="Gérer les cartes" style="margin-right: 10px;">⚙️</button>
+      <button id="bgToggle" class="theme-toggle" title="Choisir un fond" style="margin-right: 10px;">🖼️</button>
+      <button id="themeToggle" class="theme-toggle" title="Basculer mode sombre">🌙</button>
+      <span style="margin-left: 15px;">Dashboard simplifié</span>
+    </div>
+  </header>
+
+  <!-- Menu de gestion des cartes -->
+  <div id="cardsMenu" class="cards-menu" style="display: none;">
+    <div class="cards-menu-content">
+      <h3>Cartes disponibles</h3>
+      <label><input type="checkbox" id="toggle-memo" checked> Mémo</label>
+      <label><input type="checkbox" id="toggle-calendar" checked> Calendrier</label>
+      <label><input type="checkbox" id="toggle-events" checked> À venir</label>
+      <label><input type="checkbox" id="toggle-holidays" checked> Jours fériés</label>
+      <label><input type="checkbox" id="toggle-fr-news" checked> Actualités France</label>
+      <label><input type="checkbox" id="toggle-weather" checked> Météo</label>
+      <button id="resetLayout" style="margin-top: 15px; width: 100%;">Réinitialiser disposition</button>
+    </div>
+  </div>
+
+  <!-- Menu fond d'écran -->
+  <div id="bgMenu" class="cards-menu" style="display: none; right: 200px;">
+    <div class="cards-menu-content">
+      <h3>Fond d'écran</h3>
+      <div class="bg-grid">
+        <button class="bg-chip" data-bg-preset="none">Aucun</button>
+        <button class="bg-chip gradient-1" data-bg-preset="gradient1">Nuit</button>
+        <button class="bg-chip gradient-2" data-bg-preset="gradient2">Violet</button>
+        <button class="bg-chip gradient-3" data-bg-preset="gradient3">Océan</button>
+        <button class="bg-chip" data-bg-preset="paper" style="background: #f8fafc; color:#111;">Papier</button>
+        <button class="bg-chip" data-bg-preset="dots" style="background: radial-gradient(#e5e7eb 1px, transparent 1px); background-size: 12px 12px;">Points</button>
+      </div>
+      <input id="bgUrl" type="text" placeholder="URL d'image (https://...)" style="width:100%;padding:8px 10px;border:1px solid #e5e7eb;border-radius:8px;background:var(--card);color:var(--text);">
+      <button id="bgApply" style="margin-top:10px;width:100%;">Appliquer l'URL</button>
+      <button id="bgReset" style="margin-top:8px;width:100%;">Revenir au fond par défaut</button>
+    </div>
+  </div>
+
+  <main class="grid">
+    <section class="card memo">
+      <h2>Mémo</h2>
+      <textarea id="memoInput" placeholder="Écrivez votre mémo ici..."></textarea>
+      <div class="memo-actions">
+        <button id="saveMemo">Enregistrer</button>
+        <button id="clearMemo">Effacer</button>
+        <span id="memoStatus" class="status"></span>
+      </div>
+    </section>
+
+    <!-- Section météo supprimée -->
+
+    <section class="card calendar">
+      <h2>Calendrier</h2>
+      <div class="cal-controls">
+        <button id="prevMonth">◀</button>
+        <div id="calTitle" class="cal-title"></div>
+        <button id="nextMonth">▶</button>
+      </div>
+      <div id="calendarGrid" class="calendar-grid"></div>
+    </section>
+
+    <section class="card events">
+      <h2>À venir</h2>
+      <div id="upcomingList" class="upcoming-list" aria-live="polite"></div>
+    </section>
+
+    <section class="card holidays">
+      <h2>Jours fériés</h2>
+      <div class="holidays-actions" style="display:flex;justify-content:flex-end;margin-bottom:8px;gap:8px;">
+        <button id="holidaysRefresh" class="theme-toggle" title="Rafraîchir">↻</button>
+      </div>
+      <div id="holidaysList" class="holidays-list" aria-live="polite"></div>
+    </section>
+
+    <section class="card fr-news">
+      <h2>NEWS</h2>
+      <div class="news-actions" style="display:flex;justify-content:flex-end;margin-bottom:8px;gap:8px;">
+        <button id="newsRefresh" class="theme-toggle" title="Rafraîchir">↻</button>
+      </div>
+      <div id="newsList" class="news-list" aria-live="polite"></div>
+    </section>
+
+    <section class="card weather">
+      <h2>Météo</h2>
+      <div style="display:flex;gap:8px;margin-bottom:10px;">
+        <input type="text" id="postalCode" placeholder="Ville ou code postal" 
+               style="flex:1;padding:6px 10px;border:1px solid #e5e7eb;border-radius:6px;font-size:13px;background:var(--card);color:var(--text);">
+        <button id="weatherSearch" style="padding:6px 12px;">🔍</button>
+        <button id="weatherAuto" title="Détecter ma position" style="padding:6px 12px;">📍</button>
+      </div>
+      <div id="weatherDisplay" class="weather-display"></div>
+    </section>
+  </main>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
